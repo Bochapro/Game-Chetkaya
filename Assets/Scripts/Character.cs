@@ -38,6 +38,8 @@ public class Character : MonoBehaviour
       
     }
 
+    //Коммент
+
     private void Jump()
     {
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
