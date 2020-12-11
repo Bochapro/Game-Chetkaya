@@ -38,16 +38,6 @@ public class Character : MonoBehaviour
       
     }
 
-    
-
-    /*private void Run()
-    {
-
-        Vector3 direction = transform.right * Input.GetAxis("Horizontal");
-
-        transform.pozition = Vector3.MoveTowards(transform.pozition, transform.pozition + direction, speed * Time.deltaTime);
-    }*/
-
     private void Jump()
     {
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
