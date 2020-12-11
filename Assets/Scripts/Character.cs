@@ -42,4 +42,7 @@ public class Character : MonoBehaviour
     {
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
+
+    /*жопажопа
+     */
 }
