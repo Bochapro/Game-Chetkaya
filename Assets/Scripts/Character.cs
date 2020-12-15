@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : Unit
 {
     [SerializeField]
     private int lives = 5;
@@ -10,6 +10,15 @@ public class Character : MonoBehaviour
     [SerializeField]
     private float jumpForce = 15.0F;
 
+    private bool isGrounded = false;
+
+    private Bullet bullet;
+
+    private CharState State
+    {
+        get { return (CharState)animator.GetInteger("State"); }
+        set { animator.SetInteger("State", (int)value); }
+    }
 
     new private Rigidbody2D rigidbody;
     private Animator animator;
@@ -21,12 +30,24 @@ public class Character : MonoBehaviour
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
 
+        bullet = Resources.Load<Bullet>("Bullet");
+
+
+    }
+
+    private void FixedUpdate()
+    {
+        CheckGround();
     }
 
     private void Update()
     {
+        if (isGrounded) State = CharState.Idle;
+
+        if (Input.GetButton("Fire1")) Shoot();
+
         if (Input.GetButton("Horizontal")) Run();
-        if (Input.GetButtonDown("Jump")) Jump();
+        if (isGrounded && Input.GetButtonDown("Jump")) Jump();
     }
 
     private void Run()
@@ -35,16 +56,46 @@ public class Character : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
 
-      
+        sprite.flipX = direction.x < 0.0F;
+        if (isGrounded) State = CharState.Run;
     }
 
     //Коммент
 
     private void Jump()
     {
+        State = CharState.Jump;
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    /*жопажопажопа
+    private void Shoot()
+    {
+        Vector3 position = transform.position; position.y += 0.85F;
+        Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
+
+        newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
+    }
+
+    public override void ReceiveDamage()
+    {
+        lives--;
+
+        Debug.Log(lives);
+    }
+    private void CheckGround()
+    {
+        if (!isGrounded) State = CharState.Jump;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.3F);
+        isGrounded = colliders.Length > 1;
+
+    }
+    /*жопажопажопажопа
      */
+}
+
+public enum CharState
+{
+    Idle,
+    Run,
+    Jump
 }
