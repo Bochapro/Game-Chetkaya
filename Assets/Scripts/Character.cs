@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : Unit
 {
     [SerializeField]
     private int lives = 5;
@@ -11,6 +11,8 @@ public class Character : MonoBehaviour
     private float jumpForce = 15.0F;
 
     private bool isGrounded = false;
+
+    private Bullet bullet;
 
     private CharState State
     {
@@ -28,6 +30,9 @@ public class Character : MonoBehaviour
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
 
+        bullet = Resources.Load<Bullet>("Bullet");
+
+
     }
 
     private void FixedUpdate()
@@ -38,6 +43,9 @@ public class Character : MonoBehaviour
     private void Update()
     {
         if (isGrounded) State = CharState.Idle;
+
+        if (Input.GetButton("Fire1")) Shoot();
+
         if (Input.GetButton("Horizontal")) Run();
         if (isGrounded && Input.GetButtonDown("Jump")) Jump();
     }
@@ -58,6 +66,20 @@ public class Character : MonoBehaviour
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
+    private void Shoot()
+    {
+        Vector3 position = transform.position; position.y += 0.85F;
+        Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
+
+        newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
+    }
+
+    public override void ReceiveDamage()
+    {
+        lives--;
+
+        Debug.Log(lives);
+    }
     private void CheckGround()
     {
         if (!isGrounded) State = CharState.Jump;
