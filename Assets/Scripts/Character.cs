@@ -72,7 +72,7 @@ public class Character : Unit
     {
         Vector3 position = transform.position; position.y += 0.85F;
         Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
-
+        newBullet.Parent = gameObject;
         newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
     }
 
