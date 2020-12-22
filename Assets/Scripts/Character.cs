@@ -89,6 +89,12 @@ public class Character : Unit
         isGrounded = colliders.Length > 1;
 
     }
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        Unit unit = collider.gameObject.GetComponent<Unit>();
+        if (unit) ReceiveDamage();
+    }
+
     /*жопажопажопажопа
      */
 }
