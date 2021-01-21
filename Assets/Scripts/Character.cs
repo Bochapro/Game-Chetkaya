@@ -4,15 +4,17 @@ using UnityEngine;
 public class Character : Unit
 {
     [SerializeField]
-    private int lives = 5;
+    private int lives = 3;
     [SerializeField]
     private float speed = 3.0F;
     [SerializeField]
     private float jumpForce = 15.0F;
 
+
     private bool isGrounded = false;
 
     private Bullet bullet;
+    private float timeStamp;
 
     private CharState State
     {
@@ -31,6 +33,8 @@ public class Character : Unit
         sprite = GetComponentInChildren<SpriteRenderer>();
 
         bullet = Resources.Load<Bullet>("Bullet");
+        
+
 
 
     }
@@ -70,15 +74,21 @@ public class Character : Unit
 
     private void Shoot()
     {
-        Vector3 position = transform.position; position.y += 0.85F;
-        Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
-        newBullet.Parent = gameObject;
-        newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
+        
+        if (timeStamp <= Time.time)
+        {
+            Vector3 position = transform.position; position.y += 0.85F;
+            Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
+            newBullet.Parent = gameObject;
+            timeStamp = Time.time + 0.1F;
+            newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
+        }
     }
 
     public override void ReceiveDamage()
     {
         lives--;
+        if (lives == 0) Destroy(gameObject);
 
         Debug.Log(lives);
     }
