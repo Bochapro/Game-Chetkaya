@@ -46,7 +46,7 @@ public class Character : Unit
 
     private void Update()
     {
-        if (isGrounded) State = CharState.Idle;
+        if (isGrounded) State = CharState.Run;
 
         if (Input.GetButton("Fire1")) Shoot();
 
@@ -105,13 +105,11 @@ public class Character : Unit
         if (unit) ReceiveDamage();
     }
 
-    /*жопажопажопажопа
-     */
+    
 }
 
 public enum CharState
-{
-    Idle,
+{ 
     Run,
     Jump
 }
