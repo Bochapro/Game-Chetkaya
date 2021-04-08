@@ -6,7 +6,7 @@ public class Character : Unit
     [SerializeField]
     private int lives = 3;
     [SerializeField]
-    private float speed = 3.0F;
+    private float speed = 6.0F;
     [SerializeField]
     private float jumpForce = 15.0F;
 
@@ -50,13 +50,14 @@ public class Character : Unit
 
         if (Input.GetButton("Fire1")) Shoot();
 
-        if (Input.GetButton("Horizontal")) Run();
+        //if (Input.GetButton("Horizontal")) Run();
+        Run();
         if (isGrounded && Input.GetButtonDown("Jump")) Jump();
     }
 
     private void Run()
     {
-        Vector3 direction = transform.right * Input.GetAxis("Horizontal");
+        Vector3 direction = transform.right; //* Input.GetAxis("Horizontal");
 
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
 

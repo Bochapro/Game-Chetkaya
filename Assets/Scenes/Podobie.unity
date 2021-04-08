@@ -736,6 +736,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -4.3}
   m_SizeDelta: {x: 5, y: 1.2915547}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &911424765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6942196575650204873, guid: 5746218366c5ab241b1a6fcbf50cb333,
+    type: 3}
+  m_PrefabInstance: {fileID: 6942196577313087826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1068827973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,6 +1452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thePlatform: {fileID: 905518069}
   generationPoint: {fileID: 131079723}
+  Hero: {fileID: 911424765}
 --- !u!1 &1771840176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,7 +1992,12 @@ PrefabInstance:
     - target: {fileID: 6942196575650204876, guid: 5746218366c5ab241b1a6fcbf50cb333,
         type: 3}
       propertyPath: lives
-      value: 3
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942196575650204876, guid: 5746218366c5ab241b1a6fcbf50cb333,
+        type: 3}
+      propertyPath: speed
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6942196575650204877, guid: 5746218366c5ab241b1a6fcbf50cb333,
         type: 3}
